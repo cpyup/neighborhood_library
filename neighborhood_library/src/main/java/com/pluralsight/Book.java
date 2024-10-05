@@ -4,10 +4,11 @@ public class Book {
     private int id;
     private String isbn;
     private String title;
-    private Boolean isCheckedOut;
+    private boolean isCheckedOut; // Use primitive type
     private String checkedOutTo;
 
-    public Book(int id, String isbn, String title, Boolean isCheckedOut, String checkedOutTo) {  // Full Constructor
+    // Full Constructor
+    public Book(int id, String title, String isbn, boolean isCheckedOut, String checkedOutTo) {
         this.id = id;
         this.isbn = isbn;
         this.title = title;
@@ -15,7 +16,8 @@ public class Book {
         this.checkedOutTo = checkedOutTo;
     }
 
-    public Book(){  // Default Constructor
+    // Default Constructor
+    public Book() {
         this.id = 0;
         this.isbn = "";
         this.title = "";
@@ -23,13 +25,19 @@ public class Book {
         this.checkedOutTo = "";
     }
 
-    private void checkOut(String name){
+    public void CheckOut(String name) {
         this.isCheckedOut = true;
         this.checkedOutTo = name.trim().toUpperCase();
     }
 
-    private void checkIn(){
+    public void CheckIn() {
         this.isCheckedOut = false;
         this.checkedOutTo = "";
+    }
+
+    // Override toString For Book Output
+    @Override
+    public String toString() {
+        return this.title + " | ISBN: " + this.isbn + " | ID: " + this.id;
     }
 }
