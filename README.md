@@ -24,3 +24,8 @@ Workbook 2 - Workshop Assignment
 
 - Prints display of currently unavailable inventory
 - Provides options to check a book back in or return to the main menu
+
+#### Check-In (Action)
+
+- This sub-menu handles user input when submitting a request to mark a book as returned
+- Error handling directs user to attempt a new input, navigate to Home Page, or display list of checked out titles again
