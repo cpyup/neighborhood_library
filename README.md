@@ -13,6 +13,7 @@ Workbook 2 - Workshop Assignment
 ### Home Page
 
 - Main menu, navigates options to display books based on availability
+- Serves as the primary application loop, all functions end back here
 
 ### Display Available Books
 
