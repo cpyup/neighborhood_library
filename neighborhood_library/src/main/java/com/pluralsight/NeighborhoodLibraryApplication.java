@@ -120,7 +120,24 @@ public class NeighborhoodLibraryApplication {
 
     //================================================================================================================== Sub-menu Action Methods
     private static void CheckBookIn(){
+        Scanner input = new Scanner(System.in);
+        int selection;
 
+        System.out.println("Enter The ID Of The Book To Return:\n");
+        selection = input.nextInt();
+
+        for(Book b : inventory){
+            if (!b.IsAvailable() && b.GetId() == selection) {  // Book Exists And Is Marked As Checked Out
+                b.CheckIn();
+                System.out.println("\n"+b+"\nSuccessfully Returned!\nEnter 'X' To Return To Home");
+                input.next();
+                input.nextLine();
+                return;
+            }
+        }
+        System.out.println("\nError Searching Book, Check Menu And Try Again\nEnter 'X' To Return Home");
+        input.next();
+        input.nextLine();
     }
 
     private static void CheckBookOut(){
