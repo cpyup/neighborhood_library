@@ -1,10 +1,10 @@
 package com.pluralsight;
 
 public class Book {
-    private int id;
-    private String isbn;
-    private String title;
-    private boolean isCheckedOut; // Use primitive type
+    private final int id;
+    private final String isbn;
+    private final String title;
+    private boolean isCheckedOut;
     private String checkedOutTo;
 
     // Full Constructor
@@ -34,7 +34,7 @@ public class Book {
     @Override
     public String toString() {
         if(this.isCheckedOut) return this.title + " | ISBN: " + this.isbn + " | ID: " + this.id +" | Checked Out By: "+this.checkedOutTo;
-        return this.title + "\t|\tISBN:\t" + this.isbn + "\t|\tID:\t" + this.id;
+        return this.title + "\n\t[ISBN:\t" + this.isbn + "\t|\tID:\t" + this.id+"]\n";
     }
 
     public void CheckIn() {
@@ -44,6 +44,6 @@ public class Book {
 
     public void CheckOut(String name) {
         this.isCheckedOut = true;
-        this.checkedOutTo = name.trim().toUpperCase();
+        this.checkedOutTo = name.trim();
     }
 }
