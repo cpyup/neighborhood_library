@@ -91,10 +91,29 @@ public class NeighborhoodLibraryApplication {
     }
 
     private static void DisplayCheckedOut() {
-        char selection = 'x';
+        Scanner input = new Scanner(System.in);
+        char selection;
+
         for (Book b : inventory) {
             if (!b.IsAvailable()) {
                 System.out.println(b);
+            }
+        }
+
+        while(true){  // Submenu Loop - Check in
+            System.out.println("\nOptions:\nC - Check Book In\nX - Return To Home Page");
+            selection = input.next().charAt(0);
+
+            switch (selection) {
+                case 'c', 'C' -> {
+                    CheckBookIn();
+                    return;
+                }
+                case 'x', 'X' -> {
+                    return;
+                }
+                default -> {
+                }
             }
         }
     }
