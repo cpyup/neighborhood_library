@@ -21,6 +21,7 @@ public class Book {
         return !isCheckedOut;
     }
     public String GetISBN(){return isbn;}
+    public int GetId(){return id;}
 
     //================================================================================================================== Override toString For Book Output
     @Override
