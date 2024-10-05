@@ -7,10 +7,18 @@ public class Book {
     private Boolean isCheckedOut;
     private String checkedOutTo;
 
-    public Book(int id, String isbn, String title) {
+    public Book(int id, String isbn, String title, Boolean isCheckedOut, String checkedOutTo) {  // Full Constructor
         this.id = id;
         this.isbn = isbn;
         this.title = title;
+        this.isCheckedOut = isCheckedOut;
+        this.checkedOutTo = checkedOutTo;
+    }
+
+    public Book(){  // Default Constructor
+        this.id = 0;
+        this.isbn = "";
+        this.title = "";
         this.isCheckedOut = false;
         this.checkedOutTo = "";
     }
