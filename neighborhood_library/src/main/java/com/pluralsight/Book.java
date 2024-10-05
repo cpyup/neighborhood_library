@@ -28,10 +28,13 @@ public class Book {
     public boolean IsAvailable(){
         return !isCheckedOut;
     }
+    public String GetISBN(){return isbn;}
 
-    public void CheckOut(String name) {
-        this.isCheckedOut = true;
-        this.checkedOutTo = name.trim().toUpperCase();
+    // Override toString For Book Output
+    @Override
+    public String toString() {
+        if(this.isCheckedOut) return this.title + " | ISBN: " + this.isbn + " | ID: " + this.id +" | Checked Out By: "+this.checkedOutTo;
+        return this.title + "\t|\tISBN:\t" + this.isbn + "\t|\tID:\t" + this.id;
     }
 
     public void CheckIn() {
@@ -39,10 +42,8 @@ public class Book {
         this.checkedOutTo = "";
     }
 
-    // Override toString For Book Output
-    @Override
-    public String toString() {
-        if(this.isCheckedOut) return this.title + " | ISBN: " + this.isbn + " | ID: " + this.id +" | Checked Out By: "+this.checkedOutTo;
-        return this.title + "\t|\tISBN:\t" + this.isbn + "\t|\tID:\t" + this.id;
+    public void CheckOut(String name) {
+        this.isCheckedOut = true;
+        this.checkedOutTo = name.trim().toUpperCase();
     }
 }
