@@ -101,7 +101,7 @@ public class NeighborhoodLibraryApplication {
         }
 
         while(true){  // Submenu Loop - Check in
-            System.out.println("\nOptions:\nC - Check Book In\nX - Return To Home Page");
+            System.out.println("\nOptions:\n\tC - Check Book In\n\tX - Return To Home Page");
             selection = input.next().charAt(0);
 
             switch (selection) {
@@ -112,8 +112,7 @@ public class NeighborhoodLibraryApplication {
                 case 'x', 'X' -> {
                     return;
                 }
-                default -> {
-                }
+                default -> System.out.println("\nError: Invalid Selection");
             }
         }
     }
@@ -121,23 +120,31 @@ public class NeighborhoodLibraryApplication {
     //================================================================================================================== Sub-menu Action Methods
     private static void CheckBookIn(){
         Scanner input = new Scanner(System.in);
-        int selection;
+        String selection;
 
-        System.out.println("Enter The ID Of The Book To Return:\n");
-        selection = input.nextInt();
+        System.out.println("\nEnter The ID Of The Book Being Returned:\n");
+        selection = input.nextLine().trim();
 
         for(Book b : inventory){
-            if (!b.IsAvailable() && b.GetId() == selection) {  // Book Exists And Is Marked As Checked Out
+            if (!b.IsAvailable() && Integer.toString(b.GetId()).equals(selection)) {  // Book Exists And Is Marked As Checked Out
                 b.CheckIn();
-                System.out.println("\n"+b+"\nSuccessfully Returned!\nEnter 'X' To Return To Home");
-                input.next();
+                System.out.println("\n"+b+"\nSuccessfully Returned!\nPress Enter To Return To Home");
                 input.nextLine();
                 return;
             }
         }
-        System.out.println("\nError Searching Book, Check Menu And Try Again\nEnter 'X' To Return Home");
-        input.next();
-        input.nextLine();
+
+        System.out.println("\nError: ID Not Found\n\tC - Enter New ID\n\tX -  Return Home\n\tEnter - Display Checked Out Books");
+        selection = input.nextLine().trim();
+
+        // Return To Main Menu, Attempt To Check In Again, Or Display Full Checked Out Menu Again Based On User Input
+        if(selection.equals("x") || selection.equals("X"))return;
+        if(selection.equals("c") || selection.equals("C")){
+            CheckBookIn();
+        }else{
+            DisplayCheckedOut();
+        }
+
     }
 
     private static void CheckBookOut(){
