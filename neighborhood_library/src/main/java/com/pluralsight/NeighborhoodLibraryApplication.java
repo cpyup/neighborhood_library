@@ -3,10 +3,7 @@ package com.pluralsight;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -37,11 +34,19 @@ public class NeighborhoodLibraryApplication {
     //================================================================================================================== Fill List With Randomized Books
     private static void InitializeInventory() {
         List<Book> bookList = FetchBooks();
-
+        Set<String> uniqueBooks = new HashSet<>(); // For unique randomization
         Random random = new Random();
-        for (int i = 0; i < inventory.length; i++) {
+
+        int count = 0; // To track how many unique books have been added to inventory
+
+        while (count < inventory.length) {
             Book book = bookList.get(random.nextInt(bookList.size()));
-            inventory[i] = book;
+
+            // Check if this book is already added based on title or ISBN
+            if (uniqueBooks.add(book.GetISBN())) { // Use ISBN for uniqueness
+                inventory[count] = book;
+                count++;
+            }
         }
     }
 
@@ -67,18 +72,20 @@ public class NeighborhoodLibraryApplication {
             }
         }
 
-        while(true){  // Submenu Loop
+        while(true){  // Submenu Loop - Checkout
             System.out.println("\nOptions:\nC - Checkout Book\nX - Return To Home Page");
             selection = input.next().charAt(0);
 
-            switch (selection){
-                case 'c','C':
+            switch (selection) {
+                case 'c', 'C' -> {
                     CheckBookOut();
                     return;
-                case 'x','X':
+                }
+                case 'x', 'X' -> {
                     return;
-                default:
-                    break;
+                }
+                default -> {
+                }
             }
         }
     }
@@ -145,6 +152,8 @@ public class NeighborhoodLibraryApplication {
                     // Generate New Book From The Web Data, Add To Return List
                     Book book = new Book(i, title, isbn, isCheckedOut, checkedOutTo);
                     bookList.add(book);
+
+
                 }
             }
         } catch (Exception e) {
