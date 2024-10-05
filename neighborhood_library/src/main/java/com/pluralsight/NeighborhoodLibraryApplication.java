@@ -126,7 +126,8 @@ public class NeighborhoodLibraryApplication {
         selection = input.nextLine().trim();
 
         for(Book b : inventory){
-            if (!b.IsAvailable() && Integer.toString(b.GetId()).equals(selection)) {  // Book Exists And Is Marked As Checked Out
+            // Book Exists And Is Marked As Checked Out, Proceed With Check-in
+            if (!b.IsAvailable() && Integer.toString(b.GetId()).equals(selection)) {
                 b.CheckIn();
                 System.out.println("\n"+b+"\nSuccessfully Returned!\nPress Enter To Return To Home");
                 input.nextLine();
@@ -134,6 +135,7 @@ public class NeighborhoodLibraryApplication {
             }
         }
 
+        // Book Does Not Exist Or Is Already Checked In, Handle Input To Navigate To Desired Menu
         System.out.println("\nError: ID Not Found\n\tC - Enter New ID\n\tX -  Return Home\n\tEnter - Display Checked Out Books");
         selection = input.nextLine().trim();
 
