@@ -64,7 +64,7 @@ public class NeighborhoodLibraryApplication {
 
     private static void DisplayAvailableBooks() {
         Scanner input = new Scanner(System.in);
-        char selection;
+        String selection;
 
         for (Book b : inventory) {
             if (b.IsAvailable()) {
@@ -74,11 +74,13 @@ public class NeighborhoodLibraryApplication {
 
         while(true){  // Submenu Loop - Checkout
             System.out.println("\nOptions:\nC - Checkout Book\nX - Return To Home Page");
-            selection = input.next().charAt(0);
+            selection = input.nextLine().trim();
 
-            switch (selection) {
+            switch (selection.charAt(0)) {
                 case 'c', 'C' -> {
-                    CheckBookOut();
+                    System.out.println("\nEnter Your Name To Proceed:\n");
+                    String name = input.nextLine().trim();
+                    CheckBookOut(name);
                     return;
                 }
                 case 'x', 'X' -> {
@@ -149,8 +151,34 @@ public class NeighborhoodLibraryApplication {
 
     }
 
-    private static void CheckBookOut(){
+    private static void CheckBookOut(String name){
+        Scanner input = new Scanner(System.in);
+        String selection;
 
+        System.out.println("\nEnter The ID Of The Desired Book:\n");
+        selection = input.nextLine().trim();
+
+        for(Book b : inventory){
+            // Book Exists And Is Marked As Available, Proceed With Checkout
+            if (b.IsAvailable() && Integer.toString(b.GetId()).equals(selection)) {
+                b.CheckOut(name);
+                System.out.println("\n"+b+"\nPress Enter To Return To Home\n");
+                input.nextLine();
+                return;
+            }
+        }
+
+        // Book Does Not Exist Or Is Already Checked In, Handle Input To Navigate To Desired Menu
+        System.out.println("\nError: ID Not Found\n\tC - Enter New ID\n\tX -  Return Home\n\tEnter - Display Available Books");
+        selection = input.nextLine().trim();
+
+        // Return To Main Menu, Attempt To Check Out Again, Or Display Full List Of Available Books Based On User Input
+        if(selection.equals("x") || selection.equals("X"))return;
+        if(selection.equals("c") || selection.equals("C")){
+            CheckBookOut(name);
+        }else{
+            DisplayAvailableBooks();
+        }
     }
 
     //================================================================================================================== Randomized Inventory Fetching
