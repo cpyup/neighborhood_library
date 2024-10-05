@@ -17,6 +17,7 @@ public class NeighborhoodLibraryApplication {
     static Book[] inventory = new Book[20];
 
     public static void main(String[] args) {
+        System.out.println("Inventory Loading...");
         InitializeInventory();
 
         //============================================================================================================== Main Application Loop
@@ -57,14 +58,18 @@ public class NeighborhoodLibraryApplication {
 
     private static void DisplayAvailableBooks() {
         for (Book b : inventory) {  // Temporary for testing randomized inventory
-            if (b != null) {
+            if (b.IsAvailable()) {
                 System.out.println(b);
             }
         }
     }
 
     private static void DisplayCheckedOut() {
-
+        for (Book b : inventory) {
+            if (!b.IsAvailable()) {
+                System.out.println(b);
+            }
+        }
     }
 
     //================================================================================================================== Sub-menu Action Methods
@@ -78,8 +83,9 @@ public class NeighborhoodLibraryApplication {
 
     //================================================================================================================== Randomized Inventory Fetching
     private static List<Book> FetchBooks() {
-        String apiUrl = "https://openlibrary.org/search.json?q=programming&limit=100";
+        String apiUrl = "https://openlibrary.org/search.json?q=programming+java&limit=50";
         List<Book> bookList = new ArrayList<>();
+        Random random = new Random();
 
         try {  //  Send GET, Read Response
             URL url = new URL(apiUrl);
@@ -103,17 +109,28 @@ public class NeighborhoodLibraryApplication {
                 for (int i = 0; i < docs.length(); i++) {
                     JSONObject doc = docs.getJSONObject(i);
                     String title = doc.getString("title");
+
+                    // Extract ISBNs
                     JSONArray isbnArray = doc.optJSONArray("isbn");
                     String isbn = (isbnArray != null && isbnArray.length() > 0) ? isbnArray.getString(0) : "No ISBN available";
 
-                    //  Generate New Book From The Web Data, Add To Return List
-                    Book book = new Book(i, title, isbn, false, "");
+                    // Extract Author Names
+                    JSONArray authorsArray = doc.optJSONArray("author_name");
+                    String author = (authorsArray != null && authorsArray.length() > 0) ? authorsArray.getString(0) : "Unknown";
+
+                    // Determine If The Book Is Checked Out (25% chance)
+                    boolean isCheckedOut = random.nextInt(100) < 25;
+                    String checkedOutTo = isCheckedOut ? author : "";
+
+                    // Generate New Book From The Web Data, Add To Return List
+                    Book book = new Book(i, title, isbn, isCheckedOut, checkedOutTo);
                     bookList.add(book);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return bookList;
     }
 

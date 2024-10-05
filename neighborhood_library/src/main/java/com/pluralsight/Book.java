@@ -25,6 +25,10 @@ public class Book {
         this.checkedOutTo = "";
     }
 
+    public boolean IsAvailable(){
+        return !isCheckedOut;
+    }
+
     public void CheckOut(String name) {
         this.isCheckedOut = true;
         this.checkedOutTo = name.trim().toUpperCase();
@@ -38,6 +42,7 @@ public class Book {
     // Override toString For Book Output
     @Override
     public String toString() {
+        if(this.isCheckedOut) return this.title + " | ISBN: " + this.isbn + " | ID: " + this.id +" | Checked Out By: "+this.checkedOutTo;
         return this.title + " | ISBN: " + this.isbn + " | ID: " + this.id;
     }
 }
