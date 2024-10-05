@@ -7,7 +7,7 @@ public class Book {
     private boolean isCheckedOut;
     private String checkedOutTo;
 
-    // Full Constructor
+    //================================================================================================================== Constructor
     public Book(int id, String title, String isbn, boolean isCheckedOut, String checkedOutTo) {
         this.id = id;
         this.isbn = isbn;
@@ -16,27 +16,20 @@ public class Book {
         this.checkedOutTo = checkedOutTo;
     }
 
-    // Default Constructor
-    public Book() {
-        this.id = 0;
-        this.isbn = "";
-        this.title = "";
-        this.isCheckedOut = false;
-        this.checkedOutTo = "";
-    }
-
+    //================================================================================================================== Getter Methods
     public boolean IsAvailable(){
         return !isCheckedOut;
     }
     public String GetISBN(){return isbn;}
 
-    // Override toString For Book Output
+    //================================================================================================================== Override toString For Book Output
     @Override
     public String toString() {
-        if(this.isCheckedOut) return this.title + " | ISBN: " + this.isbn + " | ID: " + this.id +" | Checked Out By: "+this.checkedOutTo;
+        if(this.isCheckedOut) return this.title + "\n\t[ISBN:\t" + this.isbn + "\t|\tID:\t" + this.id+"\t|\tChecked Out By:\t"+this.checkedOutTo+"]\n";
         return this.title + "\n\t[ISBN:\t" + this.isbn + "\t|\tID:\t" + this.id+"]\n";
     }
 
+    //================================================================================================================== Setter Methods
     public void CheckIn() {
         this.isCheckedOut = false;
         this.checkedOutTo = "";

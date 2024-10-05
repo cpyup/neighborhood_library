@@ -14,7 +14,7 @@ public class NeighborhoodLibraryApplication {
     static Book[] inventory = new Book[20];
 
     public static void main(String[] args) {
-        System.out.println("Inventory Loading...");
+        System.out.println("Inventory Loading...\n\n\n");
         InitializeInventory();
 
         //============================================================================================================== Main Application Loop
@@ -34,16 +34,16 @@ public class NeighborhoodLibraryApplication {
     //================================================================================================================== Fill List With Randomized Books
     private static void InitializeInventory() {
         List<Book> bookList = FetchBooks();
-        Set<String> uniqueBooks = new HashSet<>(); // For unique randomization
+        Set<String> uniqueBooks = new HashSet<>(); // For Unique Randomization
         Random random = new Random();
 
-        int count = 0; // To track how many unique books have been added to inventory
+        int count = 0;
 
-        while (count < inventory.length) {
+        while (count < inventory.length) {  //  Using While Loop To Better Control Increment
             Book book = bookList.get(random.nextInt(bookList.size()));
 
-            // Check if this book is already added based on title or ISBN
-            if (uniqueBooks.add(book.GetISBN())) { // Use ISBN for uniqueness
+            // Check If This Book Is Already Added Based On ISBN
+            if (uniqueBooks.add(book.GetISBN())) {
                 inventory[count] = book;
                 count++;
             }
@@ -56,7 +56,7 @@ public class NeighborhoodLibraryApplication {
         int option;
 
 
-        System.out.println("\n\t\t\tHome Page\n\nMessage Of The Day:\nHello, Welcome To Our Community Library!\n\nMenu Options:\n1 - Show Available Books\n2 - Show Checked Out Books\n3 - Exit");
+        System.out.println("\n\n\n\t\t\tHome Page\n\nMessage Of The Day:\nHello, Welcome To Our Community Library!\n\nMenu Options:\n1 - Show Available Books\n2 - Show Checked Out Books\n3 - Exit");
         option = userInput.nextInt();
 
         return option;
