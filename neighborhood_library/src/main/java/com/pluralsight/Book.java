@@ -43,6 +43,6 @@ public class Book {
     @Override
     public String toString() {
         if(this.isCheckedOut) return this.title + " | ISBN: " + this.isbn + " | ID: " + this.id +" | Checked Out By: "+this.checkedOutTo;
-        return this.title + " | ISBN: " + this.isbn + " | ID: " + this.id;
+        return this.title + "\t|\tISBN:\t" + this.isbn + "\t|\tID:\t" + this.id;
     }
 }

@@ -50,21 +50,41 @@ public class NeighborhoodLibraryApplication {
         Scanner userInput = new Scanner(System.in);
         int option;
 
-        System.out.println("\t\t\tHome Page\n\nMessage Of The Day:\nHello, Welcome To Our Community Library!\n\nMenu Options:\n1 - Show Available Books\n2 - Show Checked Out Books\n3 - Exit");
+
+        System.out.println("\n\t\t\tHome Page\n\nMessage Of The Day:\nHello, Welcome To Our Community Library!\n\nMenu Options:\n1 - Show Available Books\n2 - Show Checked Out Books\n3 - Exit");
         option = userInput.nextInt();
 
         return option;
     }
 
     private static void DisplayAvailableBooks() {
-        for (Book b : inventory) {  // Temporary for testing randomized inventory
+        Scanner input = new Scanner(System.in);
+        char selection;
+
+        for (Book b : inventory) {
             if (b.IsAvailable()) {
                 System.out.println(b);
+            }
+        }
+
+        while(true){  // Submenu Loop
+            System.out.println("\nOptions:\nC - Checkout Book\nX - Return To Home Page");
+            selection = input.next().charAt(0);
+
+            switch (selection){
+                case 'c','C':
+                    CheckBookOut();
+                    return;
+                case 'x','X':
+                    return;
+                default:
+                    break;
             }
         }
     }
 
     private static void DisplayCheckedOut() {
+        char selection = 'x';
         for (Book b : inventory) {
             if (!b.IsAvailable()) {
                 System.out.println(b);
