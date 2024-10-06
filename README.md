@@ -24,7 +24,7 @@ Workbook 2 - Workshop Assignment
 
 - This sub-menu handles user input when submitting a request to return a book
 - Takes the users' name and updates the status in the current inventory
-- Error handling directs user to attempt a new input, navigate to Home Page, or display list of checked out titles again
+- Error handling directs user to attempt a new input, navigate to Home Page, or display list of available titles again
 
 ### Display Checked Out Books
 
