@@ -12,16 +12,18 @@ import java.net.URL;
 public class NeighborhoodLibraryApplication {
 
     static Book[] inventory = new Book[20];
+    static Scanner userInput = new Scanner(System.in);
 
     public static void main(String[] args) {
         initializeInventory();
 
-        //============================================================================================================== Main Application Loop
+        // Main Application Loop
         while (true) {
             switch (homeScreen()) {
                 case 1 -> displayAvailableBooks();
                 case 2 -> displayCheckedOut();
                 case 3 -> {
+                    userInput.close(); // Close the scanner when done
                     return;
                 }
                 default -> {
@@ -30,7 +32,7 @@ public class NeighborhoodLibraryApplication {
         }
     }
 
-    //================================================================================================================== Fill List With Randomized Books
+    // Fill List With Randomized Books
     private static void initializeInventory() {
         List<Book> bookList = fetchBooks();
         Set<String> uniqueBooks = new HashSet<>(); // For Unique Randomization
@@ -38,7 +40,7 @@ public class NeighborhoodLibraryApplication {
 
         int count = 0;
 
-        while (count < inventory.length) {  //  Using While Loop To Better Control Increment
+        while (count < inventory.length) {  // Using While Loop To Better Control Increment
             Book book = bookList.get(random.nextInt(bookList.size()));
 
             // Check If This Book Is Already Added Based On ISBN
@@ -49,24 +51,22 @@ public class NeighborhoodLibraryApplication {
         }
     }
 
-        //============================================================================================================== Menu Display Methods
+    // Menu Display Methods
     private static int homeScreen() {
-        Scanner userInput = new Scanner(System.in);
         int option;
-
 
         System.out.println("\n\t\t\tHome Page\n\nMessage Of The Day:\n\tHello, Welcome To Our Community Library!\n\nMenu Options:\n1 - Show Available Books\n2 - Show Checked Out Books\n3 - Exit");
         option = userInput.nextInt();
+        userInput.nextLine();
 
         return option;
     }
 
     private static void displayAvailableBooks() {
-        Scanner input = new Scanner(System.in);
         String selection;
 
         System.out.println("\nEnter Your Name To Proceed:\n");
-        String name = input.nextLine().trim();
+        String name = userInput.nextLine().trim();
 
         for (Book b : inventory) {
             if (b.isAvailable()) {
@@ -74,9 +74,9 @@ public class NeighborhoodLibraryApplication {
             }
         }
 
-        while(true){  // Submenu Loop - Checkout
+        while (true) {  // Submenu Loop - Checkout
             System.out.println("\nOptions:\nC - Checkout Book\nX - Return To Home Page");
-            selection = input.nextLine().trim();
+            selection = userInput.nextLine().trim();
 
             switch (selection.charAt(0)) {
                 case 'c', 'C' -> {
@@ -93,7 +93,6 @@ public class NeighborhoodLibraryApplication {
     }
 
     private static void displayCheckedOut() {
-        Scanner input = new Scanner(System.in);
         char selection;
 
         for (Book b : inventory) {
@@ -102,9 +101,10 @@ public class NeighborhoodLibraryApplication {
             }
         }
 
-        while(true){  // Submenu Loop - Check in
+        while (true) {  // Submenu Loop - Check in
             System.out.println("\nOptions:\n\tC - Check Book In\n\tX - Return To Home Page");
-            selection = input.next().charAt(0);
+            selection = userInput.next().charAt(0);
+            userInput.nextLine();
 
             switch (selection) {
                 case 'c', 'C' -> {
@@ -119,75 +119,70 @@ public class NeighborhoodLibraryApplication {
         }
     }
 
-    //================================================================================================================== Sub-menu Action Methods
-    private static void checkBookIn(){
-        Scanner input = new Scanner(System.in);
+    // Sub-menu Action Methods
+    private static void checkBookIn() {
         String selection;
 
         System.out.println("\nEnter The ID Of The Book Being Returned:\n");
-        selection = input.nextLine().trim();
+        selection = userInput.nextLine().trim();
 
-        for(Book b : inventory){
+        for (Book b : inventory) {
             // Book Exists And Is Marked As Checked Out, Proceed With Check-in
             if (!b.isAvailable() && Integer.toString(b.getId()).equals(selection)) {
                 b.setCheckedIn();
-                System.out.println("\n"+b+"\nSuccessfully Returned!\nPress Enter To Return To Home Page");
-                input.nextLine();
+                System.out.println("\n" + b + "\nSuccessfully Returned!\nPress Enter To Return To Home Page");
+                userInput.nextLine();
                 return;
             }
         }
 
-        // Book Does Not Exist Or Is Already Checked In, Handle Input To Navigate To Desired Menu
-        System.out.println("\nError: ID Not Found\n\tC - Enter New ID\n\tX -  Return Home\n\tEnter - Display Checked Out Books");
-        selection = input.nextLine().trim();
+        // Handle invalid ID
+        System.out.println("\nError: ID Not Found\n\tC - Enter New ID\n\tX - Return Home\n\tEnter - Display Checked Out Books");
+        selection = userInput.nextLine().trim();
 
-        // Return To Main Menu, Attempt To Check In Again, Or Display Full Checked Out Menu Again Based On User Input
-        if(selection.equals("x") || selection.equals("X"))return;
-        if(selection.equals("c") || selection.equals("C")){
+        if (selection.equalsIgnoreCase("x")) return;
+        if (selection.equalsIgnoreCase("c")) {
             checkBookIn();
-        }else{
+        } else {
             displayCheckedOut();
         }
-
     }
 
-    private static void checkBookOut(String name){
-        Scanner input = new Scanner(System.in);
+    private static void checkBookOut(String name) {
         String selection;
 
         System.out.println("\nEnter The ID Of The Desired Book:\n");
-        selection = input.nextLine().trim();
+        selection = userInput.nextLine().trim();
 
-        for(Book b : inventory){
+        for (Book b : inventory) {
             // Book Exists And Is Marked As Available, Proceed With Checkout
             if (b.isAvailable() && Integer.toString(b.getId()).equals(selection)) {
                 b.setCheckedOut(name);
-                System.out.println("\n"+b+"\nPress Enter To Return To Home\n");
-                input.nextLine();
+                System.out.println("\n" + b + "\nPress Enter To Return To Home\n");
+                userInput.nextLine();
                 return;
             }
         }
 
-        // Book Does Not Exist Or Is Already Checked In, Handle Input To Navigate To Desired Menu
-        System.out.println("\nError: ID Not Found\n\tC - Enter New ID\n\tX -  Return Home\n\tEnter - Display Available Books");
-        selection = input.nextLine().trim();
+        // Handle invalid ID
+        System.out.println("\nError: ID Not Found\n\tC - Enter New ID\n\tX - Return Home\n\tEnter - Display Available Books");
+        selection = userInput.nextLine().trim();
 
-        // Return To Main Menu, Attempt To Check Out Again, Or Display Full List Of Available Books Based On User Input
-        if(selection.equals("x") || selection.equals("X"))return;
-        if(selection.equals("c") || selection.equals("C")){
+        if (selection.equalsIgnoreCase("x")) return;
+        if (selection.equalsIgnoreCase("c")) {
             checkBookOut(name);
-        }else{
+        } else {
             displayAvailableBooks();
         }
     }
 
-    //================================================================================================================== Randomized Inventory Fetching
+    // Randomized Inventory Fetching
     private static List<Book> fetchBooks() {
         String apiUrl = "https://openlibrary.org/search.json?q=programming+java&limit=50";
         List<Book> bookList = new ArrayList<>();
         Random random = new Random();
 
-        try {  //  Send GET, Read Response
+        try {  // Send GET, Read Response
             URL url = new URL(apiUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
@@ -202,7 +197,7 @@ public class NeighborhoodLibraryApplication {
             }
             in.close();
 
-            //  Convert Response To JSON Object For Easier Parsing
+            // Convert Response To JSON Object For Easier Parsing
             JSONObject jsonResponse = new JSONObject(response.toString());
             if (jsonResponse.getInt("numFound") > 0) {
                 JSONArray docs = jsonResponse.getJSONArray("docs");
@@ -225,8 +220,6 @@ public class NeighborhoodLibraryApplication {
                     // Generate New Book From The Web Data, Add To Return List
                     Book book = new Book(i, title, isbn, isCheckedOut, checkedOutTo);
                     bookList.add(book);
-
-
                 }
             }
         } catch (Exception e) {
@@ -235,6 +228,4 @@ public class NeighborhoodLibraryApplication {
 
         return bookList;
     }
-
-
 }
