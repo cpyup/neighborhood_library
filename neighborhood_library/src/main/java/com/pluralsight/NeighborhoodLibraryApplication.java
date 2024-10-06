@@ -14,13 +14,13 @@ public class NeighborhoodLibraryApplication {
     static Book[] inventory = new Book[20];
 
     public static void main(String[] args) {
-        InitializeInventory();
+        initializeInventory();
 
         //============================================================================================================== Main Application Loop
         while (true) {
-            switch (HomeScreen()) {
-                case 1 -> DisplayAvailableBooks();
-                case 2 -> DisplayCheckedOut();
+            switch (homeScreen()) {
+                case 1 -> displayAvailableBooks();
+                case 2 -> displayCheckedOut();
                 case 3 -> {
                     return;
                 }
@@ -31,8 +31,8 @@ public class NeighborhoodLibraryApplication {
     }
 
     //================================================================================================================== Fill List With Randomized Books
-    private static void InitializeInventory() {
-        List<Book> bookList = FetchBooks();
+    private static void initializeInventory() {
+        List<Book> bookList = fetchBooks();
         Set<String> uniqueBooks = new HashSet<>(); // For Unique Randomization
         Random random = new Random();
 
@@ -42,7 +42,7 @@ public class NeighborhoodLibraryApplication {
             Book book = bookList.get(random.nextInt(bookList.size()));
 
             // Check If This Book Is Already Added Based On ISBN
-            if (uniqueBooks.add(book.GetISBN())) {
+            if (uniqueBooks.add(book.getISBN())) {
                 inventory[count] = book;
                 count++;
             }
@@ -50,7 +50,7 @@ public class NeighborhoodLibraryApplication {
     }
 
         //============================================================================================================== Menu Display Methods
-    private static int HomeScreen() {
+    private static int homeScreen() {
         Scanner userInput = new Scanner(System.in);
         int option;
 
@@ -61,7 +61,7 @@ public class NeighborhoodLibraryApplication {
         return option;
     }
 
-    private static void DisplayAvailableBooks() {
+    private static void displayAvailableBooks() {
         Scanner input = new Scanner(System.in);
         String selection;
 
@@ -69,7 +69,7 @@ public class NeighborhoodLibraryApplication {
         String name = input.nextLine().trim();
 
         for (Book b : inventory) {
-            if (b.IsAvailable()) {
+            if (b.isAvailable()) {
                 System.out.println(b);
             }
         }
@@ -80,7 +80,7 @@ public class NeighborhoodLibraryApplication {
 
             switch (selection.charAt(0)) {
                 case 'c', 'C' -> {
-                    CheckBookOut(name);
+                    checkBookOut(name);
                     return;
                 }
                 case 'x', 'X' -> {
@@ -92,12 +92,12 @@ public class NeighborhoodLibraryApplication {
         }
     }
 
-    private static void DisplayCheckedOut() {
+    private static void displayCheckedOut() {
         Scanner input = new Scanner(System.in);
         char selection;
 
         for (Book b : inventory) {
-            if (!b.IsAvailable()) {
+            if (!b.isAvailable()) {
                 System.out.println(b);
             }
         }
@@ -108,7 +108,7 @@ public class NeighborhoodLibraryApplication {
 
             switch (selection) {
                 case 'c', 'C' -> {
-                    CheckBookIn();
+                    checkBookIn();
                     return;
                 }
                 case 'x', 'X' -> {
@@ -120,7 +120,7 @@ public class NeighborhoodLibraryApplication {
     }
 
     //================================================================================================================== Sub-menu Action Methods
-    private static void CheckBookIn(){
+    private static void checkBookIn(){
         Scanner input = new Scanner(System.in);
         String selection;
 
@@ -129,8 +129,8 @@ public class NeighborhoodLibraryApplication {
 
         for(Book b : inventory){
             // Book Exists And Is Marked As Checked Out, Proceed With Check-in
-            if (!b.IsAvailable() && Integer.toString(b.GetId()).equals(selection)) {
-                b.CheckIn();
+            if (!b.isAvailable() && Integer.toString(b.getId()).equals(selection)) {
+                b.setCheckedIn();
                 System.out.println("\n"+b+"\nSuccessfully Returned!\nPress Enter To Return To Home Page");
                 input.nextLine();
                 return;
@@ -144,14 +144,14 @@ public class NeighborhoodLibraryApplication {
         // Return To Main Menu, Attempt To Check In Again, Or Display Full Checked Out Menu Again Based On User Input
         if(selection.equals("x") || selection.equals("X"))return;
         if(selection.equals("c") || selection.equals("C")){
-            CheckBookIn();
+            checkBookIn();
         }else{
-            DisplayCheckedOut();
+            displayCheckedOut();
         }
 
     }
 
-    private static void CheckBookOut(String name){
+    private static void checkBookOut(String name){
         Scanner input = new Scanner(System.in);
         String selection;
 
@@ -160,8 +160,8 @@ public class NeighborhoodLibraryApplication {
 
         for(Book b : inventory){
             // Book Exists And Is Marked As Available, Proceed With Checkout
-            if (b.IsAvailable() && Integer.toString(b.GetId()).equals(selection)) {
-                b.CheckOut(name);
+            if (b.isAvailable() && Integer.toString(b.getId()).equals(selection)) {
+                b.setCheckedOut(name);
                 System.out.println("\n"+b+"\nPress Enter To Return To Home\n");
                 input.nextLine();
                 return;
@@ -175,14 +175,14 @@ public class NeighborhoodLibraryApplication {
         // Return To Main Menu, Attempt To Check Out Again, Or Display Full List Of Available Books Based On User Input
         if(selection.equals("x") || selection.equals("X"))return;
         if(selection.equals("c") || selection.equals("C")){
-            CheckBookOut(name);
+            checkBookOut(name);
         }else{
-            DisplayAvailableBooks();
+            displayAvailableBooks();
         }
     }
 
     //================================================================================================================== Randomized Inventory Fetching
-    private static List<Book> FetchBooks() {
+    private static List<Book> fetchBooks() {
         String apiUrl = "https://openlibrary.org/search.json?q=programming+java&limit=50";
         List<Book> bookList = new ArrayList<>();
         Random random = new Random();

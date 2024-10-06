@@ -17,11 +17,11 @@ public class Book {
     }
 
     //================================================================================================================== Getter Methods
-    public boolean IsAvailable(){
+    public boolean isAvailable(){
         return !isCheckedOut;
     }
-    public String GetISBN(){return isbn;}
-    public int GetId(){return id;}
+    public String getISBN(){return isbn;}
+    public int getId(){return id;}
 
     //================================================================================================================== Override toString For Book Output
     @Override
@@ -31,12 +31,12 @@ public class Book {
     }
 
     //================================================================================================================== Setter Methods
-    public void CheckIn() {
+    public void setCheckedIn() {
         this.isCheckedOut = false;
         this.checkedOutTo = "";
     }
 
-    public void CheckOut(String name) {
+    public void setCheckedOut(String name) {
         this.isCheckedOut = true;
         this.checkedOutTo = name.trim();
     }
