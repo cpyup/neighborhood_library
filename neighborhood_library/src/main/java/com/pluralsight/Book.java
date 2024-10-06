@@ -7,7 +7,6 @@ public class Book {
     private boolean isCheckedOut;
     private String checkedOutTo;
 
-    //================================================================================================================== Constructor
     public Book(int id, String title, String isbn, boolean isCheckedOut, String checkedOutTo) {
         this.id = id;
         this.isbn = isbn;
@@ -16,28 +15,33 @@ public class Book {
         this.checkedOutTo = checkedOutTo;
     }
 
-    //================================================================================================================== Getter Methods
-    public boolean isAvailable(){
+    public boolean isAvailable() {
         return !isCheckedOut;
     }
-    public String getISBN(){return isbn;}
-    public int getId(){return id;}
 
-    //================================================================================================================== Override toString For Book Output
-    @Override
-    public String toString() {
-        if(this.isCheckedOut) return this.title + "\n\t[ISBN:\t" + this.isbn + "\t|\tID:\t" + this.id+"\t|\tChecked Out By:\t"+this.checkedOutTo+"]\n";
-        return this.title + "\n\t[ISBN:\t" + this.isbn + "\t|\tID:\t" + this.id+"]\n";
+    public String getISBN() {
+        return isbn;
     }
 
-    //================================================================================================================== Setter Methods
-    public void setCheckedIn() {
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s\n\t[ISBN: %s | ID: %d%s]",
+                title, isbn, id,
+                isCheckedOut ? " | Checked Out By: " + checkedOutTo : "");
+    }
+
+    public void checkIn() {
         this.isCheckedOut = false;
         this.checkedOutTo = "";
     }
 
-    public void setCheckedOut(String name) {
+    public void checkOut(String name) {
         this.isCheckedOut = true;
-        this.checkedOutTo = name.trim();
+        this.checkedOutTo = name;
     }
+
 }
