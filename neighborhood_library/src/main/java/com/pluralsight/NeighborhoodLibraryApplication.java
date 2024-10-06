@@ -114,11 +114,11 @@ public class NeighborhoodLibraryApplication {
             boolean isMatch = Integer.toString(b.getId()).equals(selection);
             if ((isCheckout && isAvailable && isMatch) || (!isCheckout && !isAvailable && isMatch)) {
                 if (isCheckout) {
-                    b.setCheckedOut(name); // Mark the book as checked out
+                    b.checkOut(name); // Mark the book as checked out
                 } else {
-                    b.setCheckedIn(); // Mark the book as checked in
+                    b.checkIn(); // Mark the book as checked in
                 }
-                System.out.println("\n" + b + "\nSuccessfully " + action + "!\nPress Enter To Return To Home");
+                System.out.println("\n" + b + "\nSuccessful " + action + "!\nPress Enter To Return To Home");
                 userInput.nextLine(); // Wait for user input
                 return; // Return to the previous menu
             }
