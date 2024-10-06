@@ -14,7 +14,6 @@ public class NeighborhoodLibraryApplication {
     static Book[] inventory = new Book[20];
 
     public static void main(String[] args) {
-        System.out.println("Inventory Loading...\n\n\n");
         InitializeInventory();
 
         //============================================================================================================== Main Application Loop
@@ -56,7 +55,7 @@ public class NeighborhoodLibraryApplication {
         int option;
 
 
-        System.out.println("\n\n\n\t\t\tHome Page\n\nMessage Of The Day:\nHello, Welcome To Our Community Library!\n\nMenu Options:\n1 - Show Available Books\n2 - Show Checked Out Books\n3 - Exit");
+        System.out.println("\n\t\t\tHome Page\n\nMessage Of The Day:\n\tHello, Welcome To Our Community Library!\n\nMenu Options:\n1 - Show Available Books\n2 - Show Checked Out Books\n3 - Exit");
         option = userInput.nextInt();
 
         return option;
@@ -65,6 +64,9 @@ public class NeighborhoodLibraryApplication {
     private static void DisplayAvailableBooks() {
         Scanner input = new Scanner(System.in);
         String selection;
+
+        System.out.println("\nEnter Your Name To Proceed:\n");
+        String name = input.nextLine().trim();
 
         for (Book b : inventory) {
             if (b.IsAvailable()) {
@@ -78,8 +80,6 @@ public class NeighborhoodLibraryApplication {
 
             switch (selection.charAt(0)) {
                 case 'c', 'C' -> {
-                    System.out.println("\nEnter Your Name To Proceed:\n");
-                    String name = input.nextLine().trim();
                     CheckBookOut(name);
                     return;
                 }
@@ -131,7 +131,7 @@ public class NeighborhoodLibraryApplication {
             // Book Exists And Is Marked As Checked Out, Proceed With Check-in
             if (!b.IsAvailable() && Integer.toString(b.GetId()).equals(selection)) {
                 b.CheckIn();
-                System.out.println("\n"+b+"\nSuccessfully Returned!\nPress Enter To Return To Home");
+                System.out.println("\n"+b+"\nSuccessfully Returned!\nPress Enter To Return To Home Page");
                 input.nextLine();
                 return;
             }
