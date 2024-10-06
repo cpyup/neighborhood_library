@@ -54,7 +54,7 @@ public class NeighborhoodLibraryApplication {
 
     // Display the home screen and return the user's menu choice
     private static String homeScreen() {
-        System.out.println("\n\t\t\tHome Page\n\nMessage Of The Day:\n\tHello, Welcome To Our Community Library!\n\nMenu Options:\n1 - Show Available Books\n2 - Show Checked Out Books\n3 - Exit");
+        System.out.println("\n\t\t\tHome Page\n\n\t\tMessage Of The Day:\nHello, Welcome To Our Community Library!\n\nMenu Options:\n1 - Show Available Books\n2 - Show Checked Out Books\n3 - Exit");
         return userInput.nextLine().trim(); // Return user's choice
     }
 
