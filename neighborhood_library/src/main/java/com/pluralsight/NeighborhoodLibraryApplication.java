@@ -17,6 +17,7 @@ public class NeighborhoodLibraryApplication {
     static String name = "";
 
     public static void main(String[] args) {
+        submitName();
         initializeInventory(); // Initialize the book inventory
 
         // Main Application Loop
@@ -55,13 +56,11 @@ public class NeighborhoodLibraryApplication {
 
     // Display the home screen and return the user's menu choice
     private static String homeScreen() {
-        System.out.println("\n\t\t\tHome Page\n\n\t\tMessage Of The Day:\nHello, Welcome To Our Community Library!\n\nMenu Options:\n\t1 - Show Available Books\n\t2 - Show Checked Out Books\n\t3 - Exit");
+        System.out.println("\n\t\t\tHome Page\n\n\t\tMessage Of The Day:\nHello "+name+", Welcome To Our Community Library!\n\nMenu Options:\n\t1 - Show Available Books\n\t2 - Show Checked Out Books\n\t3 - Exit");
         return userInput.nextLine().trim(); // Return user's choice
     }
 
     private static void displayBooks(Boolean available){
-        // If no name has been entered yet, and we are displaying available, request name
-        if(available && name.equals(""))submitName();
         // Display books based on desired availability
         for (Book b : inventory) {
             if (b.isAvailable() == available) {  // Display available/unavailable based on bool
@@ -69,12 +68,13 @@ public class NeighborhoodLibraryApplication {
             }
         }
 
-        handleBookAction(available); // Checkout action
+        handleBookAction(available); // Check-out/check-in action
     }
 
     private static void submitName(){
         System.out.println("\nEnter Your Name To Proceed:\n");
         name = userInput.nextLine().trim(); // Get user's name
+        if(name.equals("")){ System.out.println("\nError: Name Cannot Be Blank\n");submitName();}  // Do Not Allow Blank
     }
 
     // Handle book check-in and check-out actions
