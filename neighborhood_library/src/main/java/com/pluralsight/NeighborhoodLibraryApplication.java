@@ -69,10 +69,10 @@ public class NeighborhoodLibraryApplication {
 
     // Display inventory based on availability
     private static void displayBooks(Boolean available){
-        // Display books based on desired availability
+        System.out.println("\n"+(available ? "Available " : "Unavailable ")+"Inventory List:\n");
         for (Book b : inventory) {
             if (b.isAvailable() == available) {  // Display available/unavailable based on bool
-                System.out.println(b);
+                System.out.println(b+"\n");
             }
         }
 
