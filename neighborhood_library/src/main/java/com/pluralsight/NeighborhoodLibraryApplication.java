@@ -18,7 +18,7 @@ public class NeighborhoodLibraryApplication {
 
     public static void main(String[] args) {
         submitName();
-        initializeInventory(); // Initialize the book inventory
+        initializeInventory();
 
         // Main Application Loop
         while (true) {
@@ -83,18 +83,19 @@ public class NeighborhoodLibraryApplication {
     // Handle book check-in and check-out action sub-menus
     private static void handleBookAction(boolean isCheckout) {
         while (true) {
-            System.out.println(isCheckout ? "\nOptions:\n\tC - Check Book Out\n\tX - Return To Home Page" : "\nOptions:\n\tC - Check Book In\n\tX - Return To Home Page");
+            System.out.println(isCheckout ? "\nOptions:\n\tC - Check Book Out\n\tX - Return To Home Page" :
+                    "\nOptions:\n\tC - Check Book In\n\tX - Return To Home Page");
             String selection = userInput.nextLine().trim();
 
             switch (selection.toLowerCase()) {
                 case "c" -> {
-                    processBook(isCheckout); // Handle the book process
+                    processBook(isCheckout); // Begin request to check in/out to/from inventory
                     return; // Return to the main menu
                 }
                 case "x" -> {
                     return; // Return to the main menu
                 }
-                default -> System.out.println("\nError: Invalid Selection"); // Handle invalid selection
+                default -> System.out.println("\nError: Invalid Selection"); // Handle invalid selections
             }
         }
     }
