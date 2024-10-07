@@ -36,6 +36,13 @@ public class NeighborhoodLibraryApplication {
         }
     }
 
+    // Get the users name, required for check-out process
+    private static void submitName(){
+        System.out.println("\nEnter Your Name To Proceed:\n");
+        name = userInput.nextLine().trim(); // Get user's name
+        if(name.equals("")){ System.out.println("\nError: Name Cannot Be Blank\n");submitName();}  // Do Not Allow Blank
+    }
+
     // Fill inventory with randomized books from an external source
     private static void initializeInventory() {
         List<Book> bookList = fetchBooks(); // Fetch books from the API
@@ -60,6 +67,7 @@ public class NeighborhoodLibraryApplication {
         return userInput.nextLine().trim(); // Return user's choice
     }
 
+    // Display inventory based on availability
     private static void displayBooks(Boolean available){
         // Display books based on desired availability
         for (Book b : inventory) {
@@ -71,13 +79,7 @@ public class NeighborhoodLibraryApplication {
         handleBookAction(available); // Check-out/check-in action
     }
 
-    private static void submitName(){
-        System.out.println("\nEnter Your Name To Proceed:\n");
-        name = userInput.nextLine().trim(); // Get user's name
-        if(name.equals("")){ System.out.println("\nError: Name Cannot Be Blank\n");submitName();}  // Do Not Allow Blank
-    }
-
-    // Handle book check-in and check-out actions
+    // Handle book check-in and check-out action sub-menus
     private static void handleBookAction(boolean isCheckout) {
         while (true) {
             System.out.println(isCheckout ? "\nOptions:\n\tC - Check Book Out\n\tX - Return To Home Page" : "\nOptions:\n\tC - Check Book In\n\tX - Return To Home Page");
