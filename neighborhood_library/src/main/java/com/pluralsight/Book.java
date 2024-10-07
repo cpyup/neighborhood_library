@@ -29,7 +29,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return String.format("%s\n\t[ISBN: %s | ID: %d%s]",
+        return String.format("%s\t[ISBN: %s | ID: %d%s]",
                 title, isbn, id,
                 isCheckedOut ? " | Checked Out By: " + checkedOutTo : "");
     }
