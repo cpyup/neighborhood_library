@@ -54,7 +54,7 @@ public class NeighborhoodLibraryApplication {
 
     // Display the home screen and return the user's menu choice
     private static String homeScreen() {
-        System.out.println("\n\t\t\tHome Page\n\n\t\tMessage Of The Day:\nHello, Welcome To Our Community Library!\n\nMenu Options:\n1 - Show Available Books\n2 - Show Checked Out Books\n3 - Exit");
+        System.out.println("\n\t\t\tHome Page\n\n\t\tMessage Of The Day:\nHello, Welcome To Our Community Library!\n\nMenu Options:\n\t1 - Show Available Books\n\t2 - Show Checked Out Books\n\t3 - Exit");
         return userInput.nextLine().trim(); // Return user's choice
     }
 
@@ -87,7 +87,7 @@ public class NeighborhoodLibraryApplication {
     // Handle book check-in and check-out actions
     private static void handleBookAction(String name, boolean isCheckout) {
         while (true) {
-            System.out.println(isCheckout ? "\nOptions:\nC - Checkout Book\nX - Return To Home Page" : "\nOptions:\n\tC - Check Book In\n\tX - Return To Home Page");
+            System.out.println(isCheckout ? "\nOptions:\n\tC - Checkout Book\n\tX - Return To Home Page" : "\nOptions:\n\tC - Check Book In\n\tX - Return To Home Page");
             String selection = userInput.nextLine().trim();
 
             switch (selection.toLowerCase()) {
@@ -118,19 +118,19 @@ public class NeighborhoodLibraryApplication {
                 } else {
                     b.checkIn(); // Mark the book as checked in
                 }
-                System.out.println("\n" + b + "\nSuccessful " + action + "!\nPress Enter To Return To Home");
+                System.out.println("\n" + b + "\n\nSuccessful " + action + "!\nPress Enter To Return To Home");
                 userInput.nextLine(); // Wait for user input
                 return; // Return to the previous menu
             }
         }
 
         // Handle invalid ID input
-        System.out.println("\nError: ID Not Found\n\tC - Enter New ID\n\tX - Return Home\n\tEnter - Display " + (isCheckout ? "Available" : "Checked Out") + " Books");
+        System.out.println("\nError: ID Not Found\n\nOptions:\n\tC - Enter New ID\n\tX - Return Home\n\tEnter - Display " + (isCheckout ? "Available" : "Checked Out") + " Books");
         selection = userInput.nextLine().trim();
 
         if (selection.equalsIgnoreCase("x")) return; // Exit to home
         if (selection.equalsIgnoreCase("c")) {
-            processBook(name, isCheckout); // Re-enter process
+            processBook(name, isCheckout); // Reenter process
         } else {
             if (isCheckout) {
                 displayAvailableBooks(); // Redisplay available books
