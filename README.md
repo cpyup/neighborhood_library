@@ -1,6 +1,8 @@
 # Neighborhood Library
 
-Workbook 2 - Workshop Assignment
+## Assignment Overview
+
+"You will build an application for your Neighborhood Library. The library is a free service available to anyone in your neighborhood, and is based on the honor system. Anyone can check out a book, they just enter their name and the application will track who checked it out."
 
 ## Submission Description
 
