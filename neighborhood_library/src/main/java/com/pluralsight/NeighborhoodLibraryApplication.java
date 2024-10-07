@@ -63,7 +63,8 @@ public class NeighborhoodLibraryApplication {
 
     // Display the home screen and return the user's menu choice
     private static String homeScreen() {
-        System.out.println("\n\t\t\t\tHome Page\n\nHello "+name.split(" ")[0]+", Welcome To Our Community Library!\n\nMenu Options:\n\t1 - Show Available Books\n\t2 - Show Checked Out Books\n\t3 - Exit");
+        System.out.println("\n\t\t\t\tHome Page\n\nHello "+name.split(" ")[0]+", Welcome To Our Community Library!"+
+                "\n\nMenu Options:\n\t1 - Show Available Books\n\t2 - Show Checked Out Books\n\t3 - Exit");
         return userInput.nextLine().trim(); // Return user's choice
     }
 
@@ -120,7 +121,8 @@ public class NeighborhoodLibraryApplication {
         }
 
         // Handle invalid ID input
-        System.out.println("\nError: ID Not Found\n\nOptions:\n\tC - Enter New ID\n\tX - Return Home\n\tEnter - Display " + (isCheckout ? "Available" : "Checked Out") + " Books");
+        System.out.println("\nError: ID Not Found\n\nOptions:\n\tC - Enter New ID\n\tX - Return Home\n\tEnter - Display " +
+                (isCheckout ? "Available" : "Checked Out") + " Books");
         selection = userInput.nextLine().trim();
 
         if (selection.equalsIgnoreCase("x")) return; // Exit to home
