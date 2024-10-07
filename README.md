@@ -8,6 +8,8 @@
 
 ### Application Startup
 
+- User is prompted to enter their name, error handling prevents blank input
+
 - API request is sent to [Open Library](https://openlibrary.org/) (a free resource for finding information about published books)
 
 - The current library inventory is then set to a random collection of titles returned from Open Library
