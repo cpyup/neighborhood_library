@@ -14,6 +14,7 @@ public class NeighborhoodLibraryApplication {
     // Inventory to hold available books
     static Book[] inventory = new Book[20];
     static Scanner userInput = new Scanner(System.in);
+    static String name = "";
 
     public static void main(String[] args) {
         initializeInventory(); // Initialize the book inventory
@@ -21,8 +22,8 @@ public class NeighborhoodLibraryApplication {
         // Main Application Loop
         while (true) {
             switch (homeScreen()) {
-                case "1" -> displayAvailableBooks(); // Display available books
-                case "2" -> displayCheckedOut(); // Display checked-out books
+                case "1" -> displayBooks(true); // Display available books
+                case "2" -> displayBooks(false); // Display checked-out books
                 case "3" -> {
                     userInput.close(); // Close the scanner when exiting
                     return; // Exit the application
@@ -58,41 +59,33 @@ public class NeighborhoodLibraryApplication {
         return userInput.nextLine().trim(); // Return user's choice
     }
 
-    // Display available books and handle user checkout actions
-    private static void displayAvailableBooks() {
-        System.out.println("\nEnter Your Name To Proceed:\n");
-        String name = userInput.nextLine().trim(); // Get user's name
-
-        // Display available books
+    private static void displayBooks(Boolean available){
+        // If no name has been entered yet, and we are displaying available, request name
+        if(available && name.equals(""))submitName();
+        // Display books based on desired availability
         for (Book b : inventory) {
-            if (b.isAvailable()) {
+            if (b.isAvailable() == available) {  // Display available/unavailable based on bool
                 System.out.println(b);
             }
         }
 
-        handleBookAction(name, true); // Checkout action
+        handleBookAction(available); // Checkout action
     }
 
-    // Display checked-out books and handle user check-in actions
-    private static void displayCheckedOut() {
-        for (Book b : inventory) {
-            if (!b.isAvailable()) {
-                System.out.println(b); // Show checked-out books
-            }
-        }
-
-        handleBookAction(null, false); // Check-in action
+    private static void submitName(){
+        System.out.println("\nEnter Your Name To Proceed:\n");
+        name = userInput.nextLine().trim(); // Get user's name
     }
 
     // Handle book check-in and check-out actions
-    private static void handleBookAction(String name, boolean isCheckout) {
+    private static void handleBookAction(boolean isCheckout) {
         while (true) {
-            System.out.println(isCheckout ? "\nOptions:\n\tC - Checkout Book\n\tX - Return To Home Page" : "\nOptions:\n\tC - Check Book In\n\tX - Return To Home Page");
+            System.out.println(isCheckout ? "\nOptions:\n\tC - Check Book Out\n\tX - Return To Home Page" : "\nOptions:\n\tC - Check Book In\n\tX - Return To Home Page");
             String selection = userInput.nextLine().trim();
 
             switch (selection.toLowerCase()) {
                 case "c" -> {
-                    processBook(name, isCheckout); // Handle the book process
+                    processBook(isCheckout); // Handle the book process
                     return; // Return to the main menu
                 }
                 case "x" -> {
@@ -104,7 +97,7 @@ public class NeighborhoodLibraryApplication {
     }
 
     // Handle the process of checking a book in or out
-    private static void processBook(String name, boolean isCheckout) {
+    private static void processBook( boolean isCheckout) {
         String action = isCheckout ? "Checkout" : "Return";
         System.out.println("\nEnter The ID Of The Desired Book:\n");
         String selection = userInput.nextLine().trim(); // Get book ID
@@ -130,13 +123,10 @@ public class NeighborhoodLibraryApplication {
 
         if (selection.equalsIgnoreCase("x")) return; // Exit to home
         if (selection.equalsIgnoreCase("c")) {
-            processBook(name, isCheckout); // Reenter process
+            processBook(isCheckout); // Reenter process
         } else {
-            if (isCheckout) {
-                displayAvailableBooks(); // Redisplay available books
-            } else {
-                displayCheckedOut(); // Redisplay checked-out books
-            }
+            // Redisplay book list based on desired availability
+            displayBooks(isCheckout); // Redisplay available books
         }
     }
 
